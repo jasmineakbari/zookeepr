@@ -60,7 +60,7 @@ app.get('/api/animals', (req, res) => {
     res.json(results);
 });
 
-app.get('./api/animals/:id', (req, res) => {
+app.get('/api/animals/:id', (req, res) => {
     const result = findById(req.params.id, animals);
     if (result) {
         res.json(result);
