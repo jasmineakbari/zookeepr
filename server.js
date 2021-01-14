@@ -45,6 +45,12 @@ function filterByQuery(query, animalsArray) {
     return filteredResults;
 }
 
+function findById(id, animalsArray) {
+    const result = animalsArray.filter(animal => animal.id === id) [0];
+    return result;
+}
+
+
 // two arguments 1st is route client will 'request' from 2nd is using send from 'response'parameter
 app.get('/api/animals', (req, res) => {
     let results = animals;
@@ -53,6 +59,17 @@ app.get('/api/animals', (req, res) => {
     }
     res.json(results);
 });
+
+app.get('./api/animals/:id', (req, res) => {
+    const result = findById(req.params.id, animals);
+    if (result) {
+        res.json(result);
+    } else {
+        res.send(404);
+    }
+
+});
+
 // enables server to listen for requests
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
