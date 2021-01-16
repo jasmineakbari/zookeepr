@@ -13,6 +13,8 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 //parse incoming JSON data
 app.use(express.json());
+// gives access to all assets i.e. css and js pages in public dir
+app.use(express.static('public'));
 
 function filterByQuery(query, animalsArray) {
     let personalityTraitsArray = [];
@@ -120,7 +122,22 @@ app.post('/api/animals', (req, res) => {
     }
 });
 
-// enables server to listen for requests
+// route for index.html this is also the main page
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
+// route for animals.html showing list of all animals including newly added
+app.get('/animals', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/animals.html'));
+});
+
+// route for zookeepers.html page
+app.get('/zookeepers', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/zookeepers.html'));
+})
+
+// enables server to listen for requests should always be at the very bottom of js file
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
 });
